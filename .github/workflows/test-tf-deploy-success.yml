@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Init providers
+        run: terraform init
       - name: Build plan file
         run: terraform plan -out=plan
       - name: Upload plan file
@@ -24,7 +26,7 @@ jobs:
           path: plan
   apply-and-test:
     needs: plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestt 
     steps:
       - uses: actions/checkout@v3
       - name: Get build file
