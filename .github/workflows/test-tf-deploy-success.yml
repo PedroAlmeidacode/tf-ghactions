@@ -51,4 +51,10 @@ jobs:
         id: link
         run: echo "URL=$(terraform output -raw host-testing-link)" >> $GITHUB_OUTPUT
       - name: Test container
-        run: npx wait-on ${{ steps.link.outputs.URL }}
+        uses: cygnetdigital/wait_for_response@v2.0.0
+        with:
+          url: ${{ steps.link.outputs.URL }}
+          responseCode: '200,500'
+          timeout: 10000
+          interval: 500
+
