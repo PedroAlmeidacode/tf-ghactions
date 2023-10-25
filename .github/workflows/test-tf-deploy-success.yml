@@ -31,7 +31,7 @@ jobs:
           path: plan
   apply-and-test:
     needs: plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestt 
     steps:
       - uses: actions/checkout@v3
       - name: Get build file
