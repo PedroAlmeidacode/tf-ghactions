@@ -1,5 +1,5 @@
 variable "ext_port" {
-  type    = number
+  type = number
   validation {
     condition     = var.ext_port <= 65535 && var.ext_port > 0
     error_message = "The external port must be in the valid port range 0 - 65535."

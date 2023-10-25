@@ -1,0 +1,43 @@
+name: Test Terraform Deploy Success
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Format tf files
+        run: terraform fmt
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build plan file
+        run: terraform plan -out=plan
+      - name: Upload plan file
+        uses: actions/upload-artifact@v3
+        with:
+          name: plan-file
+          path: plan
+  apply-and-test:
+    needs: plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get build file
+        uses: actions/download-artifact@v3
+        with:
+          name: plan-file
+          path: ./plan
+      - name: Apply terraform infra
+        uses: PedroAlmeidacode/composite-action-apply-tf@v1
+        with:
+          plan-file-path: ./plan
+      - name: Get link output
+        id: link
+        run: echo "URL='terraform output -raw host-testing-link'" >> $GITHUB_OUTPUT
+      - name: Test container
+        run: npx wait-on ${{ steps.link.outputs.URL }}

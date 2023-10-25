@@ -39,7 +39,7 @@ resource "docker_container" "nodered_container" {
   }
   volumes {
     container_path = "/data"
-    host_path = "/Users/pedro/Documents/terraform/tf-ghactions/noderedvol"
+    host_path      = "/Users/pedro/Documents/terraform/tf-ghactions/noderedvol"
   }
 }
 
