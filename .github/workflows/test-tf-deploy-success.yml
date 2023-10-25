@@ -48,6 +48,6 @@ jobs:
           plan-file-path: ./plan
       - name: Get link output
         id: link
-        run: echo "URL='terraform output -raw host-testing-link'" >> $GITHUB_OUTPUT
+        run: echo "URL=$(terraform output -raw host-testing-link)" >> $GITHUB_OUTPUT
       - name: Test container
         run: npx wait-on ${{ steps.link.outputs.URL }}
