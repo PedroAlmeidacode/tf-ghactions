@@ -1,0 +1,31 @@
+name: 'Terraform apply'
+description: 'Execute terraform apply to the provided infra'
+inputs:
+  plan-file-path:
+    description: 'Path to the file containing the plan'
+    required: false
+    default: 'null'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Test
+      run: ls
+      shell: bash
+    - name: Test2
+      run: echo ${{ inputs.plan-file-path }}
+      shell: bash
+    # - name: Apply tf
+    #   if: inputs.plan-file-path != 'null'
+    #   id: apply-with-file
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: node_modules
+    #     key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+    # - name: Apply tf
+    #   if: inputs.plan-file-path == 'null'
+    #   id: apply-without-file
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: node_modules
+    #     key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
