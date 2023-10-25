@@ -27,8 +27,11 @@ jobs:
       - name: Upload plan file
         uses: actions/upload-artifact@v3
         with:
-          name: plan-file
-          path: plan
+          name: plan-files
+          path: |
+            plan
+            .terraform.lock.hcl
+            terraform.tfvars
   apply-and-test:
     needs: plan
     runs-on: ubuntu-latest
@@ -37,11 +40,9 @@ jobs:
       - name: Get build file
         uses: actions/download-artifact@v3
         with:
-          name: plan-file
-          path: ./plan
+          name: plan-files
       - name: Apply terraform infra
-        # uses: PedroAlmeidacode/composite-action-apply-tf@v1
-        uses: ./.github/actions/apply-tf
+        uses: PedroAlmeidacode/composite-action-apply-tf@v1
         with:
           plan-file-path: ./plan
       - name: Get link output
