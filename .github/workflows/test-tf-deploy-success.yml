@@ -1,5 +1,6 @@
 name: Test Terraform Deploy Success
 on:
+  workflow_dispatch: 
   push:
     branches:
       - main
