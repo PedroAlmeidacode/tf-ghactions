@@ -42,7 +42,7 @@ jobs:
         with:
           name: plan-files
       - name: Apply terraform infra
-        uses: PedroAlmeidacode/composite-action-apply-tf@v2
+        uses: PedroAlmeidacode/composite-action-apply-tf@v2.1.0
         with:
           plan-file-path: ./plan
       - name: Get link output
