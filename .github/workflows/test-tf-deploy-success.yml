@@ -32,7 +32,6 @@ jobs:
             plan
             .terraform.lock.hcl
             terraform.tfvars
-            .terraform
   apply-and-test:
     needs: plan
     runs-on: ubuntu-latest
@@ -43,7 +42,7 @@ jobs:
         with:
           name: plan-files
       - name: Apply terraform infra
-        uses: PedroAlmeidacode/composite-action-apply-tf@v2.1.0
+        uses: PedroAlmeidacode/composite-action-apply-tf@v2.1.1
         with:
           plan-file-path: ./plan
       - name: Get link output
