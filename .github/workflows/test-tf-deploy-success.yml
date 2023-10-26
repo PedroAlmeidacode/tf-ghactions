@@ -5,9 +5,8 @@ on:
     branches:
       - main
 env:
-  EXTERNAL_PORT: ${{ secrets.EXTERNAL_PORT }}
-  EXTERNAL_PORT_VAR: "ext_port"
   WORKSPACE: 'dev'
+  EXTERNAL_PORT: ${{ secrets.EXTERNAL_PORT }}
 
 jobs:
   format:
@@ -25,7 +24,12 @@ jobs:
       - name: Init workspace
         run: terraform workspace new ${{ env.WORKSPACE}} && terraform workspace select ${{ env.WORKSPACE }}
       - name: Create tfvars
-        run: touch terraform.tfvars || true && echo '${{ env.EXTERNAL_PORT_VAR}} = { ${{ env.WORKSPACE }} = [${{ env.EXTERNAL_PORT}}]}' > terraform.tfvars
+        run: |
+          touch terraform.tfvars || true && echo '
+          ext_port = {
+            dev  = [${{ env.EXTERNAL_PORT }}]
+            prod = [1880]
+          }' > terraform.tfvars
       - name: Build plan file
         run: terraform plan -out=plan
       - name: Upload plan file
