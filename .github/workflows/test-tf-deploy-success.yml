@@ -7,6 +7,7 @@ on:
 env:
   EXTERNAL_PORT: ${{ secrets.EXTERNAL_PORT }}
   EXTERNAL_PORT_VAR: "ext_port"
+  WORKSPACE: 'dev'
 
 jobs:
   format:
@@ -21,8 +22,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Init providers
         run: terraform init
+      - name: Init workspace
+        run: terraform workspace new ${{ env.WORKSPACE}} && terraform workspace select ${{ env.WORKSPACE }}
       - name: Create tfvars
-        run: touch terraform.tfvars || true && echo '${{ env.EXTERNAL_PORT_VAR}} = [${{ env.EXTERNAL_PORT}}]' > terraform.tfvars
+        run: touch terraform.tfvars || true && echo '${{ env.EXTERNAL_PORT_VAR}} = { ${{ env.WORKSPACE }} = [${{ env.EXTERNAL_PORT}}]}' > terraform.tfvars
       - name: Build plan file
         run: terraform plan -out=plan
       - name: Upload plan file
@@ -44,9 +47,10 @@ jobs:
         with:
           name: plan-files
       - name: Apply terraform infra
-        uses: PedroAlmeidacode/composite-action-apply-tf@v2.1.1
+        uses: PedroAlmeidacode/composite-action-apply-tf@v2.2.1
         with:
           plan-file-path: ./plan
+          workspace: ${{ env.WORKSPACE }}
       - name: Get link output
         id: link
         run: echo "URL=$(terraform output -raw host-testing-link)" >> $GITHUB_OUTPUT
