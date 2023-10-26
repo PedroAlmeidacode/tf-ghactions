@@ -22,7 +22,7 @@ jobs:
       - name: Init providers
         run: terraform init
       - name: Create tfvars
-        run: touch terraform.tfvars || true && echo '${{ env.EXTERNAL_PORT_VAR}} = ${{ env.EXTERNAL_PORT}}' > terraform.tfvars
+        run: touch terraform.tfvars || true && echo '${{ env.EXTERNAL_PORT_VAR}} = [${{ env.EXTERNAL_PORT}}]' > terraform.tfvars
       - name: Build plan file
         run: terraform plan -out=plan
       - name: Upload plan file
