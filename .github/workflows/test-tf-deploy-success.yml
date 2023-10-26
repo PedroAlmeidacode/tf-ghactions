@@ -55,6 +55,6 @@ jobs:
         with:
           url: ${{ steps.link.outputs.URL }}
           responseCode: '200'
-          timeout: 10000
+          timeout: 60000
           interval: 500
 
