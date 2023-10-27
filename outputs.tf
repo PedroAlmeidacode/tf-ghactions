@@ -1,12 +1,12 @@
-output "container-name" {
-  value       = module.container[*].container-name
-  description = "The name of the container"
-}
+# output "container-name" {
+#   value       = module.container[*].container-name
+#   description = "The name of the container"
+# }
 
-output "container-ip" {
-  value       = flatten(module.container[*].container-ip)
-  description = "The IP Address and external port of the container"
-}
+# output "container-ip" {
+#   value       = flatten(module.container[*].container-ip)
+#   description = "The IP Address and external port of the container"
+# }
 
 
 # output "host-testing-link" {
