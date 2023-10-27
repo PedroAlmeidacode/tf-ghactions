@@ -2,7 +2,7 @@ name: Test Terraform Deploy Success
 on:
   workflow_dispatch: 
   push:
-    branches:
+    branches: 
       - main
 env:
   WORKSPACE: 'dev'
@@ -22,7 +22,7 @@ jobs:
       - name: Init providers
         run: terraform init
       - name: Init workspace
-        run: terraform workspace new ${{ env.WORKSPACE}} && terraform workspace select ${{ env.WORKSPACE }}
+        run: terraform workspace new ${{ env.WORKSPACE }} && terraform workspace select ${{ env.WORKSPACE }}
       - name: Create tfvars
         run: |
           touch terraform.tfvars || true && echo '
